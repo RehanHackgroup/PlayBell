@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>PlayBell - Register</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="auth-wrapper">
+    <div class="auth-card">
+      <div class="auth-left">
+        <h1>Create Your Account</h1>
+        <p class="auth-subtitle">
+          Join PlayBell and enjoy your personal music world.
+        </p>
+      </div>
+
+      <div class="auth-right">
+        <h2>Register</h2>
+
+        <% if (error) { %>
+        <div class="error"><%= error %></div>
+        <% } %>
+
+        <form method="POST" action="/register" class="auth-form">
+          <label>
+            Username
+            <input type="text" name="username" required />
+          </label>
+
+          <label>
+            Password
+            <input type="password" name="password" required />
+          </label>
+
+          <button type="submit" class="auth-submit">Create Account</button>
+        </form>
+
+        <p style="margin-top: 10px; font-size: 13px;">
+          Already have an account?
+          <a href="/login" style="color:#7c4dff;">Login</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

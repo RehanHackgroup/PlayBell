@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Song Requests</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+
+<h2>Pending Song Requests</h2>
+
+<table border="1" width="100%">
+<tr>
+  <th>User</th>
+  <th>Title</th>
+  <th>Artist</th>
+  <th>Upload MP3</th>
+  <th>Action</th>
+</tr>
+
+<% songRequests.forEach(function(req){ %>
+<tr>
+  <td><%= req.requestedBy %></td>
+  <td><%= req.title %></td>
+  <td><%= req.artist %></td>
+
+  <td>
+    <form method="POST" action="/admin/approve-request" enctype="multipart/form-data">
+      <input type="hidden" name="id" value="<%= req.id %>">
+      <input type="file" name="mp3file" required>
+  </td>
+
+  <td>
+      <button>Approve</button>
+    </form>
+
+    <form method="POST" action="/admin/reject-request">
+      <input type="hidden" name="id" value="<%= req.id %>">
+      <button style="background:red;color:white">Reject</button>
+    </form>
+  </td>
+</tr>
+<% }) %>
+
+</table>
+
+</body>
+</html>

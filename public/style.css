@@ -1,0 +1,429 @@
+/* ========== RESET & BASE ========== */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: radial-gradient(circle at top, #15192b 0, #05040a 55%, #020106 100%);
+  color: #f5f5f5;
+}
+
+/* Generice page container */
+.container {
+  max-width: 1000px;
+  margin: 80px auto 40px auto;
+  padding: 0 16px 40px 16px;
+}
+
+/* ========== TOP BAR ========== */
+.top-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background: linear-gradient(90deg, #121528, #2a144e);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+  z-index: 20;
+}
+
+.top-bar.admin {
+  background: linear-gradient(90deg, #221014, #4f1318);
+}
+
+.logo {
+  font-weight: 700;
+  font-size: 20px;
+  letter-spacing: 0.04em;
+}
+
+.user-info {
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tag {
+  background: rgba(129, 140, 248, 0.18);
+  padding: 2px 8px;
+  border-radius: 999px;
+  margin-left: 6px;
+  font-size: 11px;
+}
+
+/* Links in top bar */
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+}
+
+.nav-links a {
+  color: #c7c8f5;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: #ffffff;
+}
+
+/* ========== BUTTONS ========== */
+button,
+.small-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  border-radius: 999px;
+  padding: 8px 18px;
+  font-size: 13px;
+  font-weight: 600;
+  background: #673ab7;
+  color: #ffffff;
+  transition: transform 0.08s ease, box-shadow 0.08s ease, opacity 0.08s ease;
+}
+
+button:hover,
+.small-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+  opacity: 0.95;
+}
+
+.small-btn {
+  padding: 5px 12px;
+  font-size: 12px;
+}
+
+.small-btn.danger {
+  background: #e53935;
+}
+
+/* ========== CARDS ========== */
+.card {
+  background: rgba(9, 10, 25, 0.96);
+  border-radius: 14px;
+  padding: 18px 18px 20px 18px;
+  margin-top: 22px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.55);
+  border: 1px solid rgba(129, 140, 248, 0.18);
+}
+
+.card h3 {
+  margin-bottom: 12px;
+  font-size: 17px;
+}
+
+/* ========== HEADINGS ========== */
+h1,
+h2,
+h3 {
+  margin-bottom: 10px;
+}
+
+h2 {
+  font-size: 22px;
+  font-weight: 700;
+}
+
+/* ========== FORM FIELDS ========== */
+label {
+  display: block;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+input[type="text"],
+input[type="password"],
+input[type="url"],
+input[type="file"] {
+  width: 100%;
+  padding: 9px 10px;
+  margin-top: 5px;
+  border-radius: 10px;
+  border: 1px solid #2f3352;
+  background: #070716;
+  color: #f5f5f5;
+  font-size: 13px;
+  outline: none;
+  transition: border 0.1s ease, box-shadow 0.1s ease;
+}
+
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="url"]:focus {
+  border-color: #7c4dff;
+  box-shadow: 0 0 0 1px rgba(124, 77, 255, 0.5);
+}
+
+/* ========== AUTH PAGES (login/register) ========== */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.auth-card {
+  width: 100%;
+  max-width: 980px;
+  background: rgba(5, 5, 20, 0.96);
+  border-radius: 20px;
+  padding: 26px 30px;
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: 28px;
+  box-shadow: 0 18px 45px rgba(0, 0, 0, 0.75);
+  border: 1px solid rgba(129, 140, 248, 0.25);
+}
+
+.auth-left {
+  border-right: 1px solid rgba(84, 87, 130, 0.5);
+  padding-right: 20px;
+}
+
+.auth-left h1 {
+  font-size: 28px;
+  margin-bottom: 10px;
+}
+
+.auth-subtitle {
+  font-size: 14px;
+  color: #c7c8f5;
+  margin-bottom: 18px;
+}
+
+.auth-demo h3 {
+  font-size: 15px;
+  margin-bottom: 6px;
+}
+
+.auth-demo p {
+  font-size: 13px;
+  color: #e0e0ff;
+}
+
+.auth-right h2 {
+  font-size: 22px;
+  margin-bottom: 6px;
+}
+
+.auth-helper {
+  font-size: 13px;
+  color: #c7c7df;
+  margin-bottom: 14px;
+}
+
+.auth-form {
+  margin-top: 4px;
+}
+
+.auth-submit {
+  width: 100%;
+  margin-top: 10px;
+}
+
+/* ERROR BOX */
+.error {
+  background: #c62828;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 10px;
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+/* ========== USER HOME (agar tu use kar raha hai) ========== */
+.user-home .home-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.home-brand {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.home-icon {
+  font-size: 18px;
+}
+
+.home-title {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+.home-nav {
+  display: flex;
+  gap: 14px;
+  font-size: 13px;
+  color: #c5c6f0;
+}
+
+.nav-item {
+  cursor: default;
+  opacity: 0.8;
+}
+
+.nav-item.active {
+  font-weight: 600;
+  opacity: 1;
+  color: #ffffff;
+}
+
+.home-hero {
+  margin-top: 14px;
+}
+
+.hero-text {
+  font-size: 14px;
+  color: #c7c8f5;
+}
+
+.user-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+  gap: 18px;
+  margin-top: 6px;
+}
+
+.user-main,
+.user-side {
+  min-width: 0;
+}
+
+/* ========== GENERIC SECTION ========== */
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.section-sub {
+  font-size: 12px;
+  color: #b3b4da;
+}
+
+/* ========== SONG LIST (list style) ========== */
+.song-list {
+  list-style: none;
+  padding: 0;
+  margin-top: 12px;
+}
+
+.song-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+  background: rgba(16, 18, 40, 0.98);
+  border-radius: 12px;
+  border: 1px solid rgba(79, 70, 229, 0.35);
+}
+
+.song-item div:first-child {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.song-item strong {
+  font-size: 14px;
+}
+
+.song-item span {
+  font-size: 12px;
+  color: #b0b3d6;
+}
+
+.song-item .play-btn {
+  padding: 6px 14px;
+  font-size: 12px;
+}
+
+/* ========== TABLES (admin / superadmin) ========== */
+.song-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 8px;
+  font-size: 13px;
+}
+
+.song-table th,
+.song-table td {
+  border: 1px solid #272b44;
+  padding: 8px 10px;
+  text-align: left;
+}
+
+.song-table th {
+  background: rgba(19, 22, 52, 0.96);
+  font-weight: 600;
+}
+
+.song-table tr:nth-child(even) td {
+  background: rgba(11, 12, 30, 0.9);
+}
+
+.song-table tr:nth-child(odd) td {
+  background: rgba(7, 8, 22, 0.9);
+}
+
+/* ========== AUDIO PLAYER (normal controls visible) ========== */
+audio {
+  width: 100%;
+  margin-top: 6px;
+  border-radius: 10px;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 768px) {
+  .container {
+    margin-top: 70px;
+    padding: 0 10px 30px 10px;
+  }
+
+  .user-info {
+    font-size: 11px;
+    flex-direction: column;
+    align-items: flex-end;
+  }
+
+  button,
+  .small-btn {
+    font-size: 12px;
+    padding: 7px 14px;
+  }
+
+  .auth-card {
+    grid-template-columns: 1fr;
+    padding: 22px 18px;
+  }
+
+  .auth-left {
+    border-right: none;
+    border-bottom: 1px solid rgba(84, 87, 130, 0.5);
+    padding-right: 0;
+    padding-bottom: 16px;
+    margin-bottom: 10px;
+  }
+
+  .user-grid {
+    grid-template-columns: 1fr;
+  }
+}

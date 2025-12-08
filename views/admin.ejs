@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PlayBell Admin</title>
+    <link rel="stylesheet" href="/style.css" />
+    <a href="/admin/requests">View Song Requests</a>
+
+  </head>
+  <body>
+
+    <div class="top-bar admin">
+      <div class="logo">PlayBell Admin</div>
+      <form method="POST" action="/logout">
+        <button class="small-btn">Logout</button>
+      </form>
+    </div>
+
+    <div class="container">
+
+      <div class="card">
+        <h3>Upload MP3 Song</h3>
+
+        <!-- ✅✅✅ MP3 FILE UPLOAD FORM ✅✅✅ -->
+        <form method="POST" action="/admin/add-song" enctype="multipart/form-data">
+          <label>
+            Song Title
+            <input type="text" name="title" required />
+          </label>
+
+          <label>
+            Artist Name
+            <input type="text" name="artist" required />
+          </label>
+
+          <label>
+            Select MP3 File
+            <input type="file" name="mp3file" accept=".mp3" required />
+          </label>
+
+          <button type="submit">Upload Song</button>
+        </form>
+      </div>
+
+      <div class="card">
+        <h3>All Songs</h3>
+
+        <table class="song-table">
+          <tr>
+            <th>ID</th>
+            <th>Title</th>
+            <th>Artist</th>
+            <th>Muted</th>
+            <th>Action</th>
+          </tr>
+
+          <% songs.forEach(function(song) { %>
+            <tr>
+              <td><%= song.id %></td>
+              <td><%= song.title %></td>
+              <td><%= song.artist %></td>
+              <td><%= song.muted ? "Yes" : "No" %></td>
+              <td>
+                <form method="POST" action="/admin/toggle-mute" style="display:inline;">
+                  <input type="hidden" name="id" value="<%= song.id %>" />
+                  <button class="small-btn">Mute</button>
+                </form>
+
+                <form method="POST" action="/admin/delete-song" style="display:inline;">
+                  <input type="hidden" name="id" value="<%= song.id %>" />
+                  <button class="small-btn danger">Delete</button>
+                </form>
+              </td>
+            </tr>
+          <% }) %>
+        </table>
+      </div>
+
+    </div>
+  </body>
+</html>

@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "username": "superadmin",
+    "password": "$2b$10$E9tXv2hyrjq1NtOkncxQoOO9qGSWTM9X/5R3fDxOFwPkYpqXHDWlC",
+    "role": "superadmin"
+  },
+  {
+    "id": 2,
+    "username": "Swiftbyte",
+    "password": "$2b$10$ECgOiXfAgaqXAFSns3bJmuZYNBPvWag3imWQV7xpx126GMnD4ThlK",
+    "role": "admin"
+  },
+  {
+    "id": 3,
+    "username": "test",
+    "password": "$2b$10$SPYK/VKIREu2Om.r9Ai9reT4kXmSh3/3sdWkzqlEx.c6HbP.R47Xa",
+    "role": "user"
+  },
+  {
+    "id": 4,
+    "username": "A F R I N😊",
+    "password": "$2b$10$jjhEvKvp47Tsnmj2foQNveIi1p34y/eTNg/QMQLAT6lZbNNBDJ.GG",
+    "role": "user"
+  }
+]

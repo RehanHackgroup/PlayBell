@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>PlayBell - Home</title>
+    <link rel="stylesheet" href="/style.css" />
+    <script defer src="/app.js"></script>
+  </head>
+  <body>
+    <div class="top-bar">
+      <div class="logo">PlayBell</div>
+      <div class="user-info">
+        <span>
+          Logged in as:
+          <strong><%= currentUser.username %></strong>
+          <span class="tag">Listener</span>
+        </span>
+        <form method="POST" action="/logout" style="display:inline;">
+          <button type="submit" class="small-btn">Logout</button>
+        </form>
+      </div>
+    </div>
+
+    <div class="container user-home">
+      <div class="home-header">
+        <div class="home-brand">
+          <span class="home-icon">🎵</span>
+          <span class="home-title">PlayBell</span>
+        </div>
+        <div class="home-nav">
+          <span class="nav-item active">Home</span>
+          <span class="nav-item">Library</span>
+          <span class="nav-item">Playlists</span>
+          <span class="nav-item">Liked Songs</span>
+        </div>
+      </div>
+
+      <div class="home-hero card">
+        <h2>Welcome back, <%= currentUser.username %> 👋</h2>
+        <p class="hero-text">
+          Discover and enjoy songs curated by your admins. Request what you love.
+        </p>
+      </div>
+
+      <div class="user-grid">
+        <!-- LEFT: SONG LIST -->
+        <div class="user-main">
+          <div class="card">
+            <div class="section-header">
+              <div>
+                <h3>Your Songs</h3>
+                <p class="section-sub">
+                  <%= songs.length %> <%= songs.length === 1 ? "track" : "tracks" %>
+                </p>
+              </div>
+            </div>
+
+            <% if (songs.length === 0) { %>
+              <p>No songs available yet. Ask your admin to add some tracks.</p>
+            <% } else { %>
+              <ul class="song-list">
+                <% songs.forEach(function(song, index) { %>
+                  <li class="song-item">
+                    <div>
+                      <strong><%= song.title %></strong>
+                      <span><%= song.artist %></span>
+                    </div>
+                    <div>
+                      <button
+                        class="play-btn"
+                        data-url="<%= song.url %>"
+                        data-index="<%= index %>"
+                      >
+                        Play
+                      </button>
+                    </div>
+                  </li>
+                <% }) %>
+              </ul>
+            <% } %>
+          </div>
+        </div>
+
+        <!-- RIGHT: PLAYER + REQUEST -->
+        <div class="user-side">
+          <div class="card player-controls">
+            <h3>Now Playing</h3>
+            <p class="now-playing" id="nowPlayingText">Nothing playing yet</p>
+
+            <!-- Audio element (UI hide CSS se hoga) -->
+            <audio id="audioPlayer"></audio>
+
+            <div class="controls-row">
+              <button id="prevBtn">⏮ Prev</button>
+              <button id="playPauseBtn">▶️ Play</button>
+              <button id="nextBtn">⏭ Next</button>
+            </div>
+          </div>
+
+          <div class="card">
+            <h3>Request a Song</h3>
+            <p class="section-sub">Tell admin what you want</p>
+
+            <form method="POST" action="/request-song">
+              <label>
+                Song Title
+                <input type="text" name="title" required />
+              </label>
+
+              <label>
+                Artist
+                <input type="text" name="artist" required />
+              </label>
+
+              <button type="submit">Send Request</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
