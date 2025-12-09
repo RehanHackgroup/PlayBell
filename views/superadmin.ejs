@@ -1,58 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
   <title>Super Admin Panel</title>
-  <link rel="stylesheet" href="/style.css" />
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-  <div class="top-bar admin">
-    <div class="logo">PlayBell - Super Admin</div>
-    <div class="user-info">
-      <span>Logged in as: <strong><%= currentUser.username %></strong></span>
-      <form method="POST" action="/logout" style="display:inline;">
-        <button class="small-btn">Logout</button>
-      </form>
-    </div>
-  </div>
+<div class="top-bar admin">
+  <div class="logo">PlayBell - Super Admin</div>
+  <div class="nav-links">
+    <!-- All Songs page -->
+    <a href="/songs">All Songs</a>
 
-  <div class="container">
-    <h2>User Role Management</h2>
+    <!-- Admin panel -->
+    <a href="/admin">Admin Panel</a>
 
-    <div class="card">
-      <table class="song-table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Username</th>
-            <th>Current Role</th>
-            <th>Change Role</th>
-          </tr>
-        </thead>
-        <tbody>
-          <% users.forEach(function(u) { %>
-            <tr>
-              <td><%= u.id %></td>
-              <td><%= u.username %></td>
-              <td><%= u.role %></td>
-              <td>
-                <form method="POST" action="/superadmin/change-role">
-                  <input type="hidden" name="id" value="<%= u.id %>" />
-                  <select name="role">
-                    <option value="user" <%= u.role === "user" ? "selected" : "" %>>User</option>
-                    <option value="admin" <%= u.role === "admin" ? "selected" : "" %>>Admin</option>
-                    <option value="superadmin" <%= u.role === "superadmin" ? "selected" : "" %>>Super Admin</option>
-                  </select>
-                  <button class="small-btn" type="submit">Update</button>
-                </form>
-              </td>
-            </tr>
-          <% }) %>
-        </tbody>
-      </table>
-    </div>
+    <!-- Current page (Super Admin) just text ya disable link -->
+    <span style="opacity:0.8;">Super Admin</span>
+
+    <!-- Logout -->
+    <form method="POST" action="/logout" style="display:inline;">
+      <button class="small-btn">Logout</button>
+    </form>
   </div>
+</div>
+
+<div class="container">
+  <div class="card">
+    <h3>User Role Management</h3>
+    <p class="section-sub">
+      Change roles of users (user / admin / superadmin).
+    </p>
+
+    <table class="song-table">
+      <tr>
+        <th>ID</th>
+        <th>Username</th>
+        <th>Current Role</th>
+        <th>Change Role</th>
+      </tr>
+
+      <% users.forEach(function(u) { %>
+        <tr>
+          <td><%= u.id %></td>
+          <td><%= u.username %></td>
+          <td><%= u.role %></td>
+          <td>
+            <form method="POST" action="/superadmin/change-role">
+              <input type="hidden" name="id" value="<%= u.id %>">
+              <select name="role">
+                <option value="user" <%= u.role === "user" ? "selected" : "" %>>User</option>
+                <option value="admin" <%= u.role === "admin" ? "selected" : "" %>>Admin</option>
+                <option value="superadmin" <%= u.role === "superadmin" ? "selected" : "" %>>Super Admin</option>
+              </select>
+              <button class="small-btn" type="submit">Update</button>
+            </form>
+          </td>
+        </tr>
+      <% }) %>
+    </table>
+  </div>
+</div>
 
 </body>
 </html>

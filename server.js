@@ -14,6 +14,10 @@ app.set("views", path.join(__dirname, "views"));
 
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+
+// 🔹 ab data folder bhi browser se dekh sakte ho (debug ke liye)
+app.use("/data", express.static(path.join(__dirname, "data")));
+
 app.use(bodyParser.urlencoded({ extended: false }));
 
 app.use(
@@ -35,7 +39,12 @@ function readJson(fileName, defaultValue) {
     fs.writeFileSync(p, JSON.stringify(defaultValue, null, 2));
     return defaultValue;
   }
-  return JSON.parse(fs.readFileSync(p));
+  const raw = fs.readFileSync(p, "utf8");
+  if (!raw.trim()) {
+    fs.writeFileSync(p, JSON.stringify(defaultValue, null, 2));
+    return defaultValue;
+  }
+  return JSON.parse(raw);
 }
 
 function writeJson(fileName, data) {
@@ -94,7 +103,7 @@ app.use((req, res, next) => {
 /* ===== ROOT ===== */
 app.get("/", (req, res) => {
   if (!req.session.user) return res.redirect("/login");
-  return res.redirect("/songs"); // SAB KO SONGS PAGE
+  return res.redirect("/songs");
 });
 
 /* ===== AUTH ===== */
@@ -106,12 +115,10 @@ app.post("/login", async (req, res) => {
   const { username, password } = req.body;
 
   const user = users.find((u) => u.username === username);
-  if (!user)
-    return res.render("login", { error: "❌ Username not found" });
+  if (!user) return res.render("login", { error: "❌ Username not found" });
 
   const match = await bcrypt.compare(password, user.password);
-  if (!match)
-    return res.render("login", { error: "❌ Wrong password" });
+  if (!match) return res.render("login", { error: "❌ Wrong password" });
 
   req.session.user = {
     id: user.id,
@@ -130,17 +137,15 @@ app.post("/register", async (req, res) => {
   const { username, password } = req.body;
 
   if (users.find((u) => u.username === username)) {
-    return res.render("register", {
-      error: "❌ Username already exists",
-    });
+    return res.render("register", { error: "Username already exists" });
   }
 
-  const hashed = await bcrypt.hash(password, 10);
+  const hash = await bcrypt.hash(password, 10);
 
   users.push({
     id: users.length + 1,
     username,
-    password: hashed,
+    password: hash,
     role: "user",
   });
 
@@ -152,7 +157,7 @@ app.post("/logout", (req, res) => {
   req.session.destroy(() => res.redirect("/login"));
 });
 
-/* ===== ✅ SONG LIST FOR ALL ===== */
+/* ===== SONGS (SAB ROLE KE LIYE) ===== */
 app.get("/songs", requireLogin, (req, res) => {
   const visibleSongs =
     req.session.user.role === "user"
@@ -162,32 +167,32 @@ app.get("/songs", requireLogin, (req, res) => {
   res.render("songs", { songs: visibleSongs });
 });
 
-/* ===== ✅ USER REQUEST PAGE (ALAG) ===== */
+/* ===== USER REQUEST PAGE ===== */
 app.get("/requests", requireLogin, (req, res) => {
-  if (req.session.user.role !== "user")
-    return res.redirect("/songs");
-
+  if (req.session.user.role !== "user") return res.redirect("/songs");
   res.render("user-requests");
 });
 
 app.post("/request-song", requireLogin, (req, res) => {
-  if (req.session.user.role !== "user")
-    return res.redirect("/songs");
+  if (req.session.user.role !== "user") return res.redirect("/songs");
 
   const { title, artist } = req.body;
+  if (!title || !artist) return res.redirect("/requests");
 
-  songRequests.push({
+  const newReq = {
     id: songRequests.length + 1,
     title,
     artist,
     requestedBy: req.session.user.username,
-  });
+  };
 
+  songRequests.push(newReq);
   writeJson("songRequests.json", songRequests);
+
   res.redirect("/requests");
 });
 
-/* ===== ✅ ADMIN PANEL ===== */
+/* ===== ADMIN PANEL ===== */
 app.get("/admin", requireLogin, requireAdmin, (req, res) => {
   res.render("admin", { songs });
 });
@@ -199,26 +204,108 @@ app.post(
   upload.single("mp3file"),
   (req, res) => {
     const { title, artist } = req.body;
+    if (!req.file || !title || !artist) return res.redirect("/admin");
 
-    songs.push({
+    const newSong = {
       id: songs.length + 1,
       title,
       artist,
       url: "/uploads/" + req.file.filename,
       muted: false,
-    });
+    };
 
+    songs.push(newSong);
     writeJson("songs.json", songs);
+
     res.redirect("/admin");
   }
 );
 
-/* ===== ✅ ADMIN REQUESTS PAGE ===== */
+/* ===== DELETE SONG ===== */
+app.post("/admin/delete-song", requireLogin, requireAdmin, (req, res) => {
+  const { id } = req.body;
+
+  const index = songs.findIndex((s) => s.id === parseInt(id));
+  if (index !== -1) {
+    const song = songs[index];
+
+    // song.url = "/uploads/filename.mp3" -> uploads/filename.mp3
+    const relative = song.url.replace(/^\//, "");
+    const filePath = path.join(__dirname, relative);
+
+    if (fs.existsSync(filePath)) fs.unlinkSync(filePath);
+
+    songs.splice(index, 1);
+    writeJson("songs.json", songs);
+  }
+
+  res.redirect("/admin");
+});
+
+/* ===== TOGGLE MUTE ===== */
+app.post("/admin/toggle-mute", requireLogin, requireAdmin, (req, res) => {
+  const { id } = req.body;
+
+  const song = songs.find((s) => s.id === parseInt(id));
+  if (song) {
+    song.muted = !song.muted;
+    writeJson("songs.json", songs);
+  }
+
+  res.redirect("/admin");
+});
+
+/* ===== ADMIN VIEW REQUESTS ===== */
 app.get("/admin/requests", requireLogin, requireAdmin, (req, res) => {
   res.render("requests", { songRequests });
 });
 
-/* ===== ✅ SUPERADMIN ===== */
+/* ===== APPROVE REQUEST ===== */
+app.post(
+  "/admin/approve-request",
+  requireLogin,
+  requireAdmin,
+  upload.single("mp3file"),
+  (req, res) => {
+    const reqId = parseInt(req.body.id);
+    const reqData = songRequests.find((r) => r.id === reqId);
+
+    if (reqData && req.file) {
+      const newSong = {
+        id: songs.length + 1,
+        title: reqData.title,
+        artist: reqData.artist,
+        url: "/uploads/" + req.file.filename,
+        muted: false,
+      };
+
+      songs.push(newSong);
+      writeJson("songs.json", songs);
+
+      songRequests = songRequests.filter((r) => r.id !== reqId);
+      writeJson("songRequests.json", songRequests);
+    }
+
+    res.redirect("/admin/requests");
+  }
+);
+
+/* ===== REJECT REQUEST ===== */
+app.post(
+  "/admin/reject-request",
+  requireLogin,
+  requireAdmin,
+  (req, res) => {
+    const reqId = parseInt(req.body.id);
+
+    songRequests = songRequests.filter((r) => r.id !== reqId);
+    writeJson("songRequests.json", songRequests);
+
+    res.redirect("/admin/requests");
+  }
+);
+
+/* ===== SUPER ADMIN ===== */
 app.get("/superadmin", requireLogin, requireSuperAdmin, (req, res) => {
   res.render("superadmin", { users });
 });
@@ -241,6 +328,7 @@ app.post(
 );
 
 /* ===== SERVER ===== */
-app.listen(3000, () => {
-  console.log("✅ PlayBell FINAL SYSTEM RUNNING on http://localhost:3000");
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`✅ PlayBell running on port ${PORT}`);
 });

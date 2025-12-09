@@ -1,21 +1,41 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Request Song</title>
+  <title>Request a Song - PlayBell</title>
   <link rel="stylesheet" href="/style.css">
 </head>
 <body>
 
-<h2>Request a New Song</h2>
+<div class="top-bar">
+  <div class="logo">PlayBell</div>
+  <div class="nav-links">
+    <a href="/songs">All Songs</a>
+    <form method="POST" action="/logout" style="display:inline;">
+      <button class="small-btn">Logout</button>
+    </form>
+  </div>
+</div>
 
-<form method="POST" action="/request-song">
-  <input type="text" name="title" placeholder="Song Title" required>
-  <input type="text" name="artist" placeholder="Artist Name" required>
-  <button>Send Request</button>
-</form>
+<div class="container">
+  <div class="card">
+    <h3>Request a Song</h3>
+    <p class="section-sub">
+      Tell your admin what you want to listen.
+    </p>
 
-<br>
-<a href="/songs">Back to Songs</a>
+    <form method="POST" action="/request-song">
+      <label>Song Title
+        <input type="text" name="title" required />
+      </label>
+
+      <label>Artist Name
+        <input type="text" name="artist" required />
+      </label>
+
+      <button type="submit">Send Request</button>
+    </form>
+  </div>
+</div>
 
 </body>
 </html>

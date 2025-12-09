@@ -7,61 +7,56 @@
 </head>
 <body>
 
-  <!-- Top bar same theme -->
-  <div class="top-bar">
-    <div class="logo">PlayBell</div>
+<div class="top-bar">
+  <div class="logo">PlayBell</div>
 
-    <div class="nav-links">
-      <% if (currentUser.role === "admin" || currentUser.role === "superadmin") { %>
-        <a href="/admin">Admin Panel</a>
-      <% } %>
+  <div class="nav-links">
+    <% if (currentUser.role === "admin" || currentUser.role === "superadmin") { %>
+      <a href="/admin">Admin Panel</a>
+    <% } %>
 
-      <% if (currentUser.role === "superadmin") { %>
-        <a href="/superadmin">Super Admin</a>
-      <% } %>
+    <% if (currentUser.role === "superadmin") { %>
+      <a href="/superadmin">Super Admin</a>
+    <% } %>
 
-      <% if (currentUser.role === "user") { %>
-        <a href="/requests">Request Song</a>
-      <% } %>
+    <% if (currentUser.role === "user") { %>
+      <a href="/requests">Request Song</a>
+    <% } %>
 
-      <form method="POST" action="/logout" style="display:inline;">
-        <button type="submit" class="small-btn">Logout</button>
-      </form>
-    </div>
+    <form method="POST" action="/logout" style="display:inline;">
+      <button type="submit" class="small-btn">Logout</button>
+    </form>
   </div>
+</div>
 
-  <div class="container">
-    <div class="card">
-      <div class="section-header">
-        <div>
-          <h3>All Songs</h3>
-          <p class="section-sub">
-            Logged in as <strong><%= currentUser.username %></strong> (<%= currentUser.role %>)
-          </p>
-        </div>
-      </div>
+<div class="container">
+  <div class="card">
+    <h3>All Songs</h3>
+    <p class="section-sub">
+      Logged in as <strong><%= currentUser.username %></strong> (<%= currentUser.role %>)
+    </p>
 
-      <% if (songs.length === 0) { %>
-        <p>No songs available yet.</p>
-      <% } else { %>
-        <ul class="song-list">
-          <% songs.forEach(function(song) { %>
-            <li class="song-item">
-              <div>
-                <strong><%= song.title %></strong>
-                <span><%= song.artist %></span>
-              </div>
-              <div style="flex:1; margin-left: 12px;">
-                <audio controls>
-                  <source src="<%= song.url %>" type="audio/mpeg" />
-                </audio>
-              </div>
-            </li>
-          <% }) %>
-        </ul>
-      <% } %>
-    </div>
+    <% if (songs.length === 0) { %>
+      <p>No songs available yet.</p>
+    <% } else { %>
+      <ul class="song-list">
+        <% songs.forEach(function(song) { %>
+          <li class="song-item">
+            <div>
+              <strong><%= song.title %></strong>
+              <span><%= song.artist %></span>
+            </div>
+            <div style="flex:1; margin-left: 12px;">
+              <audio controls>
+                <source src="<%= song.url %>" type="audio/mpeg" />
+              </audio>
+            </div>
+          </li>
+        <% }) %>
+      </ul>
+    <% } %>
   </div>
+</div>
 
 </body>
 </html>

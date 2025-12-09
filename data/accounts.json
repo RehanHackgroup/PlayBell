@@ -9,7 +9,7 @@
     "id": 2,
     "username": "Swiftbyte",
     "password": "$2b$10$ECgOiXfAgaqXAFSns3bJmuZYNBPvWag3imWQV7xpx126GMnD4ThlK",
-    "role": "admin"
+    "role": "superadmin"
   },
   {
     "id": 3,

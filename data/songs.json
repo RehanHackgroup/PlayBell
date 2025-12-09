@@ -1,30 +1,23 @@
 [
   {
-    "id": 1,
-    "title": "Sample Song",
-    "artist": "Unknown Artist",
-    "url": "https://samplelib.com/lib/preview/mp3/sample-3s.mp3",
-    "muted": false
-  },
-  {
-    "id": 2,
-    "title": "jkwwnjwwjkwb",
-    "artist": "whjwvhddhqw",
-    "url": "http://commondatastorage.googleapis.com/codeskulptor-demos/DDR_assets/Kangaroo_MusiQue_-_The_Neverwritten_Role_Playing_Game.mp3",
-    "muted": false
-  },
-  {
     "id": 3,
     "title": "yoyo",
     "artist": "test",
     "url": "/uploads/1765159225381-917075035.mp3",
-    "muted": false
+    "muted": true
   },
   {
     "id": 4,
     "title": "Eb",
     "artist": "Test 4",
     "url": "/uploads/1765159312267-8605067.mp3",
+    "muted": false
+  },
+  {
+    "id": 5,
+    "title": "dfwqtu",
+    "artist": "ydfwq,df",
+    "url": "/uploads/1765274139940-tcmac.fr - 6 AM (Official Video) YO YO HONEY SINGH HEERA SOHAL GLORY BHUSHAN KUMAR (320 KBps).mp3",
     "muted": false
   }
 ]
