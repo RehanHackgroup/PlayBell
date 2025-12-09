@@ -1,47 +1,66 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-  <meta charset="UTF-8" />
-  <title>PlayBell - Register</title>
-  <link rel="stylesheet" href="/style.css" />
+  <title>Register - PlayBell</title>
+  <link rel="stylesheet" href="/style.css">
 </head>
 <body>
-  <div class="auth-wrapper">
-    <div class="auth-card">
-      <div class="auth-left">
-        <h1>Create Your Account</h1>
-        <p class="auth-subtitle">
-          Join PlayBell and enjoy your personal music world.
-        </p>
-      </div>
 
-      <div class="auth-right">
-        <h2>Register</h2>
+<div class="auth-wrapper">
+  <div class="auth-card">
+    <div class="auth-left">
+      <h1>Welcome to PlayBell</h1>
+      <p class="auth-subtitle">
+        Create your free account and request your favourite songs.
+      </p>
 
-        <% if (error) { %>
-        <div class="error"><%= error %></div>
-        <% } %>
-
-        <form method="POST" action="/register" class="auth-form">
-          <label>
-            Username
-            <input type="text" name="username" required />
-          </label>
-
-          <label>
-            Password
-            <input type="password" name="password" required />
-          </label>
-
-          <button type="submit" class="auth-submit">Create Account</button>
-        </form>
-
-        <p style="margin-top: 10px; font-size: 13px;">
-          Already have an account?
-          <a href="/login" style="color:#7c4dff;">Login</a>
+      <div class="auth-demo">
+        <h3>Account Review</h3>
+        <p>
+          After you register, a Super Admin will verify your account.
+          Once verified, you can login and start listening.
         </p>
       </div>
     </div>
+
+    <div class="auth-right">
+      <h2>Create Account</h2>
+      <p class="auth-helper">Fill all details correctly.</p>
+
+      <% if (error) { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+
+      <form class="auth-form" method="POST" action="/register">
+        <label>Full Name
+          <input type="text" name="name" required />
+        </label>
+
+        <label>Username
+          <input type="text" name="username" required />
+        </label>
+
+        <label>Email
+          <input type="text" name="email" required />
+        </label>
+
+        <label>Phone Number
+          <input type="text" name="phone" required />
+        </label>
+
+        <label>Password
+          <input type="password" name="password" required />
+        </label>
+
+        <button type="submit" class="auth-submit">Register</button>
+      </form>
+
+      <p class="auth-helper" style="margin-top:10px;">
+        Already have an account? <a href="/login">Login here</a>
+      </p>
+    </div>
   </div>
+</div>
+
 </body>
 </html>

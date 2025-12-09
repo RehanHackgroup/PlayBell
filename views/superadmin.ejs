@@ -9,16 +9,9 @@
 <div class="top-bar admin">
   <div class="logo">PlayBell - Super Admin</div>
   <div class="nav-links">
-    <!-- All Songs page -->
     <a href="/songs">All Songs</a>
-
-    <!-- Admin panel -->
     <a href="/admin">Admin Panel</a>
-
-    <!-- Current page (Super Admin) just text ya disable link -->
     <span style="opacity:0.8;">Super Admin</span>
-
-    <!-- Logout -->
     <form method="POST" action="/logout" style="display:inline;">
       <button class="small-btn">Logout</button>
     </form>
@@ -27,24 +20,39 @@
 
 <div class="container">
   <div class="card">
-    <h3>User Role Management</h3>
+    <h3>User Management</h3>
     <p class="section-sub">
-      Change roles of users (user / admin / superadmin).
+      Change roles and verify user accounts.
     </p>
 
     <table class="song-table">
       <tr>
         <th>ID</th>
+        <th>Name</th>
         <th>Username</th>
-        <th>Current Role</th>
+        <th>Email</th>
+        <th>Phone</th>
+        <th>Role</th>
+        <th>Verified</th>
         <th>Change Role</th>
+        <th>Verify</th>
       </tr>
 
       <% users.forEach(function(u) { %>
         <tr>
           <td><%= u.id %></td>
+          <td><%= u.name || "-" %></td>
           <td><%= u.username %></td>
+          <td><%= u.email || "-" %></td>
+          <td><%= u.phone || "-" %></td>
           <td><%= u.role %></td>
+          <td>
+            <% if (u.verified === false) { %>
+              <span style="color:#e53935;font-weight:bold;">Not Verified</span>
+            <% } else { %>
+              <span style="color:#43a047;font-weight:bold;">Verified</span>
+            <% } %>
+          </td>
           <td>
             <form method="POST" action="/superadmin/change-role">
               <input type="hidden" name="id" value="<%= u.id %>">
@@ -54,6 +62,14 @@
                 <option value="superadmin" <%= u.role === "superadmin" ? "selected" : "" %>>Super Admin</option>
               </select>
               <button class="small-btn" type="submit">Update</button>
+            </form>
+          </td>
+          <td>
+            <form method="POST" action="/superadmin/toggle-verify">
+              <input type="hidden" name="id" value="<%= u.id %>">
+              <button class="small-btn" type="submit">
+                <%= u.verified === false ? "Verify" : "Unverify" %>
+              </button>
             </form>
           </td>
         </tr>

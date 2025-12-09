@@ -22,5 +22,45 @@
     "username": "A F R I N😊",
     "password": "$2b$10$jjhEvKvp47Tsnmj2foQNveIi1p34y/eTNg/QMQLAT6lZbNNBDJ.GG",
     "role": "user"
+  },
+  {
+    "id": 5,
+    "name": "test1",
+    "username": "test1",
+    "email": "test",
+    "phone": "0000000000",
+    "password": "$2b$10$F4b5YgO4Bemfwi9TFuUKf.kamBF6qyuh7B/Gv6K5pMqkhLBwO9iU2",
+    "role": "user",
+    "verified": true
+  },
+  {
+    "id": 6,
+    "name": "Rehan Shaikh",
+    "username": "test2",
+    "email": "r4343shai@gmail.com",
+    "phone": "08928986621",
+    "password": "$2b$10$UMi.4Km0ZrphAxdeWI9s8ePBILMwDr60ADHhn/Wh1fXum3Xf0KXsC",
+    "role": "user",
+    "verified": true
+  },
+  {
+    "id": 7,
+    "name": "hjvdehdd",
+    "username": "wdghwbd",
+    "email": ";ew;u;dhj",
+    "phone": "iwgdsbh",
+    "password": "$2b$10$T1J3KpEwSiYfqO6vSCf.2eEAYUdLOtrzLsBPUCbMKXkKQ/pSp83BK",
+    "role": "user",
+    "verified": false
+  },
+  {
+    "id": 8,
+    "name": "diwbdhwb",
+    "username": "dhwvshqj ",
+    "email": "whdvwqhbw",
+    "phone": "digedhuved",
+    "password": "$2b$10$sq7X/alVh6H6vYYjfcFK/OquWkGRWdGrq3TJoPoCLMMWFCBaSlAHK",
+    "role": "user",
+    "verified": false
   }
 ]

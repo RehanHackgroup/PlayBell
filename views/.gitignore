@@ -1,0 +1,32 @@
+# ============================
+# PlayBell Sensitive Data
+# ============================
+
+# User login data (username + password)
+data/accounts.json
+
+# Songs list (uploaded songs info)
+data/songs.json
+
+# Song requests history
+data/songRequests.json
+
+# Uploaded MP3 files
+uploads/
+
+# ============================
+# Node / OS junk
+# ============================
+
+node_modules/
+.env
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Windows system files
+Thumbs.db
+desktop.ini
+
+# VS Code settings
+.vscode/
