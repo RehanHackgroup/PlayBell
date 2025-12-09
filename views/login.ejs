@@ -1,61 +1,135 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>PlayBell - Login</title>
-  <link rel="stylesheet" href="/style.css" />
+  <meta charset="UTF-8">
+  <title>Login - PlayBell</title>
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #1a1a1a, #050505);
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .auth-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 360px;
+      background: rgba(10,10,10,0.95);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.8);
+      border: 1px solid #222;
+    }
+    .auth-card h2 {
+      text-align: center;
+      margin-bottom: 6px;
+      color: #00ffcc;
+      letter-spacing: 1px;
+    }
+    .auth-helper {
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+    .auth-form label {
+      display: block;
+      margin-bottom: 12px;
+      font-size: 13px;
+    }
+    .auth-form input {
+      width: 100%;
+      padding: 9px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      background: #1b1b1b;
+      color: #fff;
+    }
+    .auth-form input:focus {
+      box-shadow: 0 0 0 1px #00ffcc;
+    }
+    .auth-submit {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      background: #00ffcc;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .auth-submit:hover {
+      background: #00e6b8;
+    }
+    .error {
+      background: #ff4444;
+      color: #fff;
+      padding: 8px;
+      border-radius: 5px;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    .auth-links {
+      text-align: center;
+      margin-top: 12px;
+    }
+    .auth-links a {
+      color: #00ffcc;
+      text-decoration: none;
+      font-size: 13px;
+      display: block;
+      margin-top: 6px;
+    }
+    .auth-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
 <div class="auth-wrapper">
   <div class="auth-card">
+    <h2>PlayBell Login</h2>
+    <p class="auth-helper">Enter your username & password</p>
 
-    <!-- LEFT SIDE INFO -->
-    <div class="auth-left">
-      <h1>Welcome to PlayBell</h1>
-      <p class="auth-subtitle">
-        Login to stream your favorite music anytime, anywhere.
-      </p>
+    <% if (error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
 
-      <div class="auth-demo">
-        <h3>Why PlayBell?</h3>
-        <p>• Secure cloud-backed music platform</p>
-        <p>• Admin curated songs</p>
-        <p>• User song requests</p>
-        <p>• Custom playlists coming soon</p>
-      </div>
-    </div>
+    <form class="auth-form" method="POST" action="/login">
+      <label>
+        Username
+        <input type="text" name="username" required>
+      </label>
 
-    <!-- RIGHT SIDE LOGIN FORM -->
-    <div class="auth-right">
-      <h2>Login</h2>
+      <label>
+        Password
+        <input type="password" name="password" required>
+      </label>
 
-      <% if (error) { %>
-        <div class="error"><%= error %></div>
-      <% } %>
+      <button type="submit" class="auth-submit">Login</button>
+    </form>
 
-      <form method="POST" action="/login" class="auth-form">
-
-        <label>
-          Username
-          <input type="text" name="username" required />
-        </label>
-
-        <label>
-          Password
-          <input type="password" name="password" required />
-        </label>
-
-        <button type="submit" class="auth-submit">Login</button>
-      </form>
-
-      <p style="margin-top: 12px; font-size: 13px;">
-        New to PlayBell?
-        <a href="/register" style="color:#7c4dff; text-decoration:none;">
-          Create an account
-        </a>
-      </p>
-
+    <div class="auth-links">
+      <a href="/register">New user? Create Account</a>
+      <a href="/forgot-password">Forgot password?</a>
     </div>
   </div>
 </div>

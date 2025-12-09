@@ -30,3 +30,4 @@ desktop.ini
 
 # VS Code settings
 .vscode/
+backend/email-local.js

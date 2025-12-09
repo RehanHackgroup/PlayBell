@@ -1,63 +1,151 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
+  <meta charset="UTF-8">
   <title>Register - PlayBell</title>
-  <link rel="stylesheet" href="/style.css">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(circle at top, #1a1a1a, #050505);
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+    }
+    .auth-wrapper {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 10px;
+      box-sizing: border-box;
+    }
+    .auth-card {
+      width: 100%;
+      max-width: 420px;
+      background: rgba(10,10,10,0.95);
+      border-radius: 14px;
+      padding: 24px;
+      box-shadow: 0 0 25px rgba(0,0,0,0.8);
+      border: 1px solid #222;
+    }
+    .auth-card h2 {
+      text-align: center;
+      margin-bottom: 6px;
+      color: #00ffcc;
+      letter-spacing: 1px;
+    }
+    .auth-helper {
+      text-align: center;
+      font-size: 13px;
+      color: #aaa;
+      margin-bottom: 16px;
+    }
+    .auth-form {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+    .auth-form label {
+      display: block;
+      font-size: 13px;
+    }
+    .auth-form input {
+      width: 100%;
+      padding: 9px;
+      margin-top: 4px;
+      border-radius: 6px;
+      border: none;
+      outline: none;
+      font-size: 14px;
+      background: #1b1b1b;
+      color: #fff;
+    }
+    .auth-form input:focus {
+      box-shadow: 0 0 0 1px #00ffcc;
+    }
+    .auth-submit {
+      width: 100%;
+      padding: 10px;
+      margin-top: 8px;
+      background: #00ffcc;
+      color: #000;
+      border: none;
+      border-radius: 6px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+    .auth-submit:hover {
+      background: #00e6b8;
+    }
+    .error {
+      background: #ff4444;
+      color: #fff;
+      padding: 8px;
+      border-radius: 5px;
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 13px;
+    }
+    .auth-links {
+      text-align: center;
+      margin-top: 10px;
+      font-size: 13px;
+    }
+    .auth-links a {
+      color: #00ffcc;
+      text-decoration: none;
+    }
+    .auth-links a:hover {
+      text-decoration: underline;
+    }
+  </style>
 </head>
 <body>
 
 <div class="auth-wrapper">
   <div class="auth-card">
-    <div class="auth-left">
-      <h1>Welcome to PlayBell</h1>
-      <p class="auth-subtitle">
-        Create your free account and request your favourite songs.
-      </p>
+    <h2>Create PlayBell Account</h2>
+    <p class="auth-helper">Fill your details to sign up.</p>
 
-      <div class="auth-demo">
-        <h3>Account Review</h3>
-        <p>
-          After you register, a Super Admin will verify your account.
-          Once verified, you can login and start listening.
-        </p>
-      </div>
-    </div>
+    <% if (error) { %>
+      <div class="error"><%= error %></div>
+    <% } %>
 
-    <div class="auth-right">
-      <h2>Create Account</h2>
-      <p class="auth-helper">Fill all details correctly.</p>
+    <form class="auth-form" method="POST" action="/register">
+      <label>
+        Full Name
+        <input type="text" name="name" required>
+      </label>
 
-      <% if (error) { %>
-        <div class="error"><%= error %></div>
-      <% } %>
+      <label>
+        Username
+        <input type="text" name="username" required>
+      </label>
 
-      <form class="auth-form" method="POST" action="/register">
-        <label>Full Name
-          <input type="text" name="name" required />
-        </label>
+      <label>
+        Email
+        <input type="email" name="email" required>
+      </label>
 
-        <label>Username
-          <input type="text" name="username" required />
-        </label>
+      <label>
+        Phone
+        <input type="text" name="phone" required>
+      </label>
 
-        <label>Email
-          <input type="text" name="email" required />
-        </label>
+      <label>
+        Password
+        <input type="password" name="password" required>
+      </label>
 
-        <label>Phone Number
-          <input type="text" name="phone" required />
-        </label>
+      <button type="submit" class="auth-submit">Register</button>
+    </form>
 
-        <label>Password
-          <input type="password" name="password" required />
-        </label>
-
-        <button type="submit" class="auth-submit">Register</button>
-      </form>
-
-      <p class="auth-helper" style="margin-top:10px;">
-        Already have an account? <a href="/login">Login here</a>
-      </p>
+    <div class="auth-links">
+      Already have an account? <a href="/login">Login</a>
     </div>
   </div>
 </div>

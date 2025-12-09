@@ -1,61 +1,89 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>PlayBell - All Songs</title>
-  <link rel="stylesheet" href="/style.css" />
+  <style>
+    body{margin:0;padding:0;background:radial-gradient(circle at top,#1a1a1a,#050505);
+      font-family:Arial,sans-serif;min-height:100vh;color:#fff;}
+
+    .top-bar{display:flex;justify-content:space-between;align-items:center;
+      padding:10px 18px;background:rgba(5,5,5,0.95);border-bottom:1px solid #222;}
+
+    .logo{font-weight:bold;color:#00ffcc;font-size:18px;}
+
+    .nav-links a,.nav-links button{margin-left:10px;font-size:13px;color:#eee;
+      background:none;border:none;cursor:pointer;text-decoration:none;}
+    .nav-links button{padding:4px 10px;border-radius:6px;background:#d32f2f;}
+    .nav-links button:hover{background:#b71c1c;}
+
+    .container{max-width:900px;margin:25px auto;padding:0 12px;}
+
+    .song-card{
+      background:rgba(10,10,10,0.95);
+      border-radius:14px;
+      padding:14px;
+      box-shadow:0 0 25px rgba(0,0,0,0.8);
+      border:1px solid #222;
+      margin-bottom:12px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:15px;
+    }
+
+    .song-info strong{font-size:15px;}
+    .song-info span{font-size:12px;color:#aaa;}
+
+    /* ✅ Stylish Player */
+    audio{
+      width:260px;
+      height:36px;
+      border-radius:8px;
+      filter: hue-rotate(140deg) saturate(1.7);
+    }
+  </style>
 </head>
 <body>
 
 <div class="top-bar">
   <div class="logo">PlayBell</div>
-
   <div class="nav-links">
     <% if (currentUser.role === "admin" || currentUser.role === "superadmin") { %>
       <a href="/admin">Admin Panel</a>
     <% } %>
-
     <% if (currentUser.role === "superadmin") { %>
       <a href="/superadmin">Super Admin</a>
     <% } %>
-
     <% if (currentUser.role === "user") { %>
       <a href="/requests">Request Song</a>
     <% } %>
-
+    <a href="/change-password">Change Password</a>
     <form method="POST" action="/logout" style="display:inline;">
-      <button type="submit" class="small-btn">Logout</button>
+      <button type="submit">Logout</button>
     </form>
   </div>
 </div>
 
 <div class="container">
-  <div class="card">
-    <h3>All Songs</h3>
-    <p class="section-sub">
-      Logged in as <strong><%= currentUser.username %></strong> (<%= currentUser.role %>)
-    </p>
+  <% if (songs.length === 0) { %>
+    <p>No songs available yet.</p>
+  <% } else { %>
 
-    <% if (songs.length === 0) { %>
-      <p>No songs available yet.</p>
-    <% } else { %>
-      <ul class="song-list">
-        <% songs.forEach(function(song) { %>
-          <li class="song-item">
-            <div>
-              <strong><%= song.title %></strong>
-              <span><%= song.artist %></span>
-            </div>
-            <div style="flex:1; margin-left: 12px;">
-              <audio controls>
-                <source src="<%= song.url %>" type="audio/mpeg" />
-              </audio>
-            </div>
-          </li>
-        <% }) %>
-      </ul>
-    <% } %>
-  </div>
+    <% songs.forEach(song => { %>
+      <div class="song-card">
+        <div class="song-info">
+          <strong><%= song.title %></strong><br>
+          <span><%= song.artist %></span>
+        </div>
+
+        <audio controls>
+          <source src="<%= song.url %>" type="audio/mpeg">
+        </audio>
+      </div>
+    <% }) %>
+
+  <% } %>
 </div>
 
 </body>

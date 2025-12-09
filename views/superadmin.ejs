@@ -1,80 +1,315 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Super Admin Panel</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8">
+  <title>Super Admin Panel - PlayBell</title>
+  <style>
+    body{
+      margin:0;
+      padding:0;
+      background:radial-gradient(circle at top,#1a1a1a,#050505);
+      font-family:Arial,sans-serif;
+      min-height:100vh;
+      color:#fff;
+    }
+
+    .top-bar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      padding:10px 18px;
+      background:rgba(5,5,5,0.95);
+      border-bottom:1px solid #222;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+
+    .logo{
+      font-weight:bold;
+      color:#00ffcc;
+      font-size:18px;
+    }
+
+    .nav-links a,
+    .nav-links button{
+      margin-left:10px;
+      font-size:13px;
+      color:#eee;
+      background:none;
+      border:none;
+      cursor:pointer;
+      text-decoration:none;
+    }
+
+    .nav-links button{
+      padding:4px 10px;
+      border-radius:6px;
+      background:#d32f2f;
+    }
+
+    .nav-links button:hover{
+      background:#b71c1c;
+    }
+
+    .nav-links a:hover{
+      text-decoration:underline;
+    }
+
+    /* ✅ Main container centered */
+    .page-wrapper{
+      display:flex;
+      justify-content:center;
+      padding:20px 10px 30px;
+      box-sizing:border-box;
+    }
+
+    .container{
+      width:100%;
+      max-width:1100px;
+    }
+
+    .card{
+      background:rgba(10,10,10,0.95);
+      border-radius:14px;
+      padding:18px;
+      box-shadow:0 0 25px rgba(0,0,0,0.8);
+      border:1px solid #222;
+    }
+
+    h3{
+      margin:0 0 6px;
+      color:#00ffcc;
+      text-align:left;
+    }
+
+    .section-sub{
+      font-size:13px;
+      color:#aaa;
+      margin-bottom:14px;
+    }
+
+    /* ✅ Table styling */
+    .table-wrapper{
+      width:100%;
+      overflow-x:auto;
+    }
+
+    table{
+      width:100%;
+      border-collapse:collapse;
+      font-size:13px;
+      margin-top:8px;
+      min-width:800px;
+    }
+
+    th,td{
+      border-bottom:1px solid #222;
+      padding:8px;
+      text-align:left;
+      vertical-align:middle;
+    }
+
+    th{
+      color:#ccc;
+      font-weight:bold;
+      background:rgba(20,20,20,0.9);
+      position:sticky;
+      top:0;
+      z-index:5;
+    }
+
+    tr:nth-child(even){
+      background:rgba(20,20,20,0.4);
+    }
+
+    tr:hover{
+      background:rgba(40,40,40,0.8);
+    }
+
+    select,
+    input[type="text"]{
+      font-size:12px;
+      padding:4px 6px;
+      border-radius:4px;
+      border:none;
+      outline:none;
+      background:#1b1b1b;
+      color:#fff;
+      min-width:90px;
+    }
+
+    select:focus,
+    input[type="text"]:focus{
+      box-shadow:0 0 0 1px #00ffcc;
+    }
+
+    .small-btn{
+      padding:5px 8px;
+      border-radius:5px;
+      border:none;
+      cursor:pointer;
+      font-size:12px;
+      background:#333;
+      color:#fff;
+      margin-top:3px;
+      display:inline-block;
+    }
+
+    .small-btn.danger{
+      background:#d32f2f;
+    }
+
+    .small-btn.danger:hover{
+      background:#b71c1c;
+    }
+
+    .small-btn:hover{
+      background:#444;
+    }
+
+    .badge{
+      display:inline-block;
+      padding:2px 6px;
+      border-radius:10px;
+      font-size:11px;
+    }
+    .badge-ok{
+      background:#1b5e20;
+      color:#b9f6ca;
+    }
+    .badge-bad{
+      background:#b71c1c;
+      color:#ffccbc;
+    }
+
+    @media (max-width: 900px){
+      .card{
+        padding:14px;
+      }
+      table{
+        font-size:12px;
+      }
+      th,td{
+        padding:6px;
+      }
+    }
+  </style>
 </head>
 <body>
 
-<div class="top-bar admin">
+<div class="top-bar">
   <div class="logo">PlayBell - Super Admin</div>
   <div class="nav-links">
     <a href="/songs">All Songs</a>
     <a href="/admin">Admin Panel</a>
-    <span style="opacity:0.8;">Super Admin</span>
+    <a href="/change-password">Change Password</a>
     <form method="POST" action="/logout" style="display:inline;">
-      <button class="small-btn">Logout</button>
+      <button type="submit">Logout</button>
     </form>
   </div>
 </div>
 
-<div class="container">
-  <div class="card">
-    <h3>User Management</h3>
-    <p class="section-sub">
-      Change roles and verify user accounts.
-    </p>
+<div class="page-wrapper">
+  <div class="container">
+    <div class="card">
+      <h3>User Management</h3>
+      <p class="section-sub">
+        Manage roles, email verification, admin verification, password reset and delete users.
+      </p>
 
-    <table class="song-table">
-      <tr>
-        <th>ID</th>
-        <th>Name</th>
-        <th>Username</th>
-        <th>Email</th>
-        <th>Phone</th>
-        <th>Role</th>
-        <th>Verified</th>
-        <th>Change Role</th>
-        <th>Verify</th>
-      </tr>
+      <div class="table-wrapper">
+        <table>
+          <tr>
+            <th>ID</th>
+            <th>Name / Username</th>
+            <th>Email</th>
+            <th>Phone</th>
+            <th>Role</th>
+            <th>Email Verified</th>
+            <th>Admin Verified</th>
+            <th>Change Role</th>
+            <th>Verify / Unverify</th>
+            <th>Reset Password</th>
+            <th>Delete</th>
+          </tr>
 
-      <% users.forEach(function(u) { %>
-        <tr>
-          <td><%= u.id %></td>
-          <td><%= u.name || "-" %></td>
-          <td><%= u.username %></td>
-          <td><%= u.email || "-" %></td>
-          <td><%= u.phone || "-" %></td>
-          <td><%= u.role %></td>
-          <td>
-            <% if (u.verified === false) { %>
-              <span style="color:#e53935;font-weight:bold;">Not Verified</span>
-            <% } else { %>
-              <span style="color:#43a047;font-weight:bold;">Verified</span>
-            <% } %>
-          </td>
-          <td>
-            <form method="POST" action="/superadmin/change-role">
-              <input type="hidden" name="id" value="<%= u.id %>">
-              <select name="role">
-                <option value="user" <%= u.role === "user" ? "selected" : "" %>>User</option>
-                <option value="admin" <%= u.role === "admin" ? "selected" : "" %>>Admin</option>
-                <option value="superadmin" <%= u.role === "superadmin" ? "selected" : "" %>>Super Admin</option>
-              </select>
-              <button class="small-btn" type="submit">Update</button>
-            </form>
-          </td>
-          <td>
-            <form method="POST" action="/superadmin/toggle-verify">
-              <input type="hidden" name="id" value="<%= u.id %>">
-              <button class="small-btn" type="submit">
-                <%= u.verified === false ? "Verify" : "Unverify" %>
-              </button>
-            </form>
-          </td>
-        </tr>
-      <% }) %>
-    </table>
+          <% users.forEach(function(u){ %>
+            <tr>
+              <td><%= u.id %></td>
+
+              <td>
+                <strong><%= u.username %></strong><br>
+                <span style="font-size:12px;color:#aaa;"><%= u.name || "-" %></span>
+              </td>
+
+              <td><%= u.email || "-" %></td>
+              <td><%= u.phone || "-" %></td>
+
+              <td><span class="badge <%= u.role === 'user' ? '' : 'badge-ok' %>"><%= u.role %></span></td>
+
+              <td>
+                <% if (u.emailVerified) { %>
+                  <span class="badge badge-ok">Yes</span>
+                <% } else { %>
+                  <span class="badge badge-bad">No</span>
+                <% } %>
+              </td>
+
+              <td>
+                <% if (u.verified === false) { %>
+                  <span class="badge badge-bad">Pending</span>
+                <% } else { %>
+                  <span class="badge badge-ok">Verified</span>
+                <% } %>
+              </td>
+
+              <td>
+                <form method="POST" action="/superadmin/change-role">
+                  <input type="hidden" name="id" value="<%= u.id %>">
+                  <select name="role">
+                    <option value="user" <%= u.role === "user" ? "selected" : "" %>>User</option>
+                    <option value="admin" <%= u.role === "admin" ? "selected" : "" %>>Admin</option>
+                    <option value="superadmin" <%= u.role === "superadmin" ? "selected" : "" %>>SuperAdmin</option>
+                  </select>
+                  <button class="small-btn" type="submit">Update</button>
+                </form>
+              </td>
+
+              <td>
+                <form method="POST" action="/superadmin/toggle-verify">
+                  <input type="hidden" name="id" value="<%= u.id %>">
+                  <button class="small-btn" type="submit">
+                    <%= u.verified === false ? "Verify" : "Unverify" %>
+                  </button>
+                </form>
+              </td>
+
+              <td>
+                <form method="POST" action="/superadmin/reset-password">
+                  <input type="hidden" name="id" value="<%= u.id %>">
+                  <input type="text" name="newPassword" placeholder="New Pass" required>
+                  <button class="small-btn" type="submit">Reset</button>
+                </form>
+              </td>
+
+              <td>
+                <% if (u.role === "superadmin") { %>
+                  <span style="opacity:0.6;font-size:12px;">Protected</span>
+                <% } else { %>
+                  <form method="POST" action="/superadmin/delete-user"
+                        onsubmit="return confirm('Delete user <%= u.username %>?');">
+                    <input type="hidden" name="id" value="<%= u.id %>">
+                    <button class="small-btn danger" type="submit">Delete</button>
+                  </form>
+                <% } %>
+              </td>
+            </tr>
+          <% }) %>
+        </table>
+      </div>
+
+    </div>
   </div>
 </div>
 

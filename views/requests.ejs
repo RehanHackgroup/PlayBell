@@ -1,47 +1,193 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Song Requests</title>
-  <link rel="stylesheet" href="/style.css">
+  <meta charset="UTF-8">
+  <title>Song Requests - PlayBell</title>
+  <style>
+    body{
+      margin:0;padding:0;
+      background:radial-gradient(circle at top,#1a1a1a,#050505);
+      font-family:Arial,sans-serif;
+      min-height:100vh;color:#fff;
+    }
+    .top-bar{
+      display:flex;justify-content:space-between;align-items:center;
+      padding:10px 18px;background:rgba(5,5,5,0.95);
+      border-bottom:1px solid #222;
+    }
+    .logo{font-weight:bold;color:#00ffcc;font-size:18px;}
+    .nav-links a,.nav-links button{
+      margin-left:10px;font-size:13px;color:#eee;background:none;
+      border:none;cursor:pointer;text-decoration:none;
+    }
+    .nav-links button{
+      padding:4px 10px;border-radius:6px;background:#d32f2f;
+    }
+    .nav-links button:hover{background:#b71c1c;}
+    .container{max-width:900px;margin:25px auto;padding:0 12px;}
+    .card{
+      background:rgba(10,10,10,0.95);
+      border-radius:14px;padding:18px;
+      box-shadow:0 0 25px rgba(0,0,0,0.8);
+      border:1px solid #222;
+    }
+    h3{margin:0 0 6px;color:#00ffcc;}
+    .section-sub{font-size:13px;color:#aaa;margin-bottom:14px;}
+
+    table{width:100%;border-collapse:collapse;font-size:13px;margin-top:10px;}
+    th,td{border-bottom:1px solid #222;padding:8px;text-align:left;vertical-align:middle;}
+    th{color:#ccc;font-weight:bold;}
+
+    .btn{
+      padding:6px 12px;
+      border-radius:6px;
+      border:none;
+      cursor:pointer;
+      font-size:12px;
+      font-weight:bold;
+    }
+    .btn-main{
+      background:#00ffcc;
+      color:#000;
+    }
+    .btn-main:hover{background:#00e6b8;}
+    .btn-danger{
+      background:#d32f2f;
+      color:#fff;
+    }
+    .btn-danger:hover{background:#b71c1c;}
+
+    /* ✅ All buttons in one clean row */
+    .action-row{
+      display:flex;
+      align-items:center;
+      gap:6px;
+      flex-wrap:wrap;
+    }
+
+    /* ✅ Hide default ugly file input */
+    .real-file-input{
+      display:none;
+    }
+
+    /* ✅ Custom colored upload button */
+    .upload-btn{
+      background:#2962ff;
+      color:#fff;
+      padding:6px 12px;
+      border-radius:6px;
+      font-size:12px;
+      font-weight:bold;
+      cursor:pointer;
+      border:none;
+      display:inline-block;
+    }
+    .upload-btn:hover{
+      background:#1e4fd6;
+    }
+
+    .file-name{
+      font-size:11px;
+      color:#aaa;
+      margin-left:4px;
+      max-width:120px;
+      overflow:hidden;
+      white-space:nowrap;
+      text-overflow:ellipsis;
+    }
+  </style>
 </head>
 <body>
 
-<h2>Pending Song Requests</h2>
-
-<table border="1" width="100%">
-<tr>
-  <th>User</th>
-  <th>Title</th>
-  <th>Artist</th>
-  <th>Upload MP3</th>
-  <th>Action</th>
-</tr>
-
-<% songRequests.forEach(function(req){ %>
-<tr>
-  <td><%= req.requestedBy %></td>
-  <td><%= req.title %></td>
-  <td><%= req.artist %></td>
-
-  <td>
-    <form method="POST" action="/admin/approve-request" enctype="multipart/form-data">
-      <input type="hidden" name="id" value="<%= req.id %>">
-      <input type="file" name="mp3file" required>
-  </td>
-
-  <td>
-      <button>Approve</button>
+<div class="top-bar">
+  <div class="logo">PlayBell - Admin</div>
+  <div class="nav-links">
+    <a href="/songs">All Songs</a>
+    <a href="/admin">Admin Panel</a>
+    <a href="/change-password">Change Password</a>
+    <form method="POST" action="/logout" style="display:inline;">
+      <button type="submit">Logout</button>
     </form>
+  </div>
+</div>
 
-    <form method="POST" action="/admin/reject-request">
-      <input type="hidden" name="id" value="<%= req.id %>">
-      <button style="background:red;color:white">Reject</button>
-    </form>
-  </td>
-</tr>
-<% }) %>
+<div class="container">
+  <div class="card">
+    <h3>User Song Requests</h3>
+    <p class="section-sub">Upload MP3, then approve or reject.</p>
 
-</table>
+    <% if (songRequests.length === 0) { %>
+      <p>No pending song requests.</p>
+    <% } else { %>
+      <table>
+        <tr>
+          <th>ID</th>
+          <th>Title</th>
+          <th>Artist</th>
+          <th>Requested By</th>
+          <th>Action</th>
+        </tr>
+
+        <% songRequests.forEach(function(r, index){ %>
+          <tr>
+            <td><%= r.id %></td>
+            <td><%= r.title %></td>
+            <td><%= r.artist %></td>
+            <td><%= r.requestedBy %></td>
+            <td>
+              <div class="action-row">
+
+                <!-- ✅ UPLOAD + APPROVE -->
+                <form method="POST"
+                      action="/admin/approve-request"
+                      enctype="multipart/form-data"
+                      style="display:flex;align-items:center;gap:6px;">
+
+                  <input type="hidden" name="id" value="<%= r.id %>">
+
+                  <!-- Hidden real file input -->
+                  <input
+                    id="file-<%= index %>"
+                    class="real-file-input"
+                    type="file"
+                    name="mp3file"
+                    accept=".mp3"
+                    required
+                    onchange="document.getElementById('fname-<%= index %>').innerText = this.files[0].name;"
+                  >
+
+                  <!-- Styled upload button -->
+                  <label for="file-<%= index %>" class="upload-btn">
+                    UPLOAD
+                  </label>
+
+                  <!-- File name preview -->
+                  <span id="fname-<%= index %>" class="file-name">No file</span>
+
+                  <button class="btn btn-main" type="submit">
+                    APPROVE
+                  </button>
+                </form>
+
+                <!-- ❌ REJECT -->
+                <form method="POST"
+                      action="/admin/reject-request"
+                      onsubmit="return confirm('Reject request for <%= r.title %>?');">
+                  <input type="hidden" name="id" value="<%= r.id %>">
+                  <button class="btn btn-danger" type="submit">
+                    REJECT
+                  </button>
+                </form>
+
+              </div>
+            </td>
+          </tr>
+        <% }) %>
+
+      </table>
+    <% } %>
+  </div>
+</div>
 
 </body>
 </html>

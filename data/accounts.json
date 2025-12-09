@@ -34,33 +34,51 @@
     "verified": true
   },
   {
-    "id": 6,
-    "name": "Rehan Shaikh",
-    "username": "test2",
-    "email": "r4343shai@gmail.com",
-    "phone": "08928986621",
-    "password": "$2b$10$UMi.4Km0ZrphAxdeWI9s8ePBILMwDr60ADHhn/Wh1fXum3Xf0KXsC",
-    "role": "user",
-    "verified": true
-  },
-  {
     "id": 7,
-    "name": "hjvdehdd",
-    "username": "wdghwbd",
-    "email": ";ew;u;dhj",
-    "phone": "iwgdsbh",
-    "password": "$2b$10$T1J3KpEwSiYfqO6vSCf.2eEAYUdLOtrzLsBPUCbMKXkKQ/pSp83BK",
+    "name": "ghcfcxf",
+    "username": "75rdxdxxue",
+    "email": "liydrdxddfyb",
+    "phone": "utfgycgyvbu",
+    "password": "$2b$10$zx0b40uXioaUDCq.aImheeubDvtrabBkU4qkFeo1/xJrrrlg8dNvu",
     "role": "user",
     "verified": false
   },
   {
     "id": 8,
-    "name": "diwbdhwb",
-    "username": "dhwvshqj ",
-    "email": "whdvwqhbw",
-    "phone": "digedhuved",
-    "password": "$2b$10$sq7X/alVh6H6vYYjfcFK/OquWkGRWdGrq3TJoPoCLMMWFCBaSlAHK",
+    "name": "gdfdftcyggyrftrct",
+    "username": "tfihgxdrfyred",
+    "email": "yftfyugyugy8g",
+    "phone": "tfgvhiby8v8u",
+    "password": "$2b$10$ngx4esYb3fNFKNbmMnhoguNij/tiIC.b/LccIBrs45.33yN4H69QC",
     "role": "user",
     "verified": false
+  },
+  {
+    "id": 8,
+    "name": "isgys",
+    "username": "usgqyusgygyu",
+    "email": "r4343shai@gmail.com",
+    "phone": "08591220868",
+    "password": "$2b$10$xlnKY0XRzfiJqKmGj5csBucNOlTtgfdGXPhwAZ/NsxYGTI9gxxO1y",
+    "role": "user",
+    "verified": false,
+    "emailVerified": true,
+    "emailToken": null,
+    "resetToken": null,
+    "resetTokenExpires": null
+  },
+  {
+    "id": 9,
+    "name": "hvahxv",
+    "username": "jkbhavxgvhux",
+    "email": "'oibxhuqvxuh",
+    "phone": "ouwxbhwoqvx",
+    "password": "$2b$10$4ukNGOt6OweciFZWseYknOdCO7JijWcLS81q.vnxsFyY/jQEOMADy",
+    "role": "user",
+    "verified": false,
+    "emailVerified": false,
+    "emailToken": "41fc1976-178d-4402-ae5f-d7a24aa2b662",
+    "resetToken": null,
+    "resetTokenExpires": null
   }
 ]
