@@ -8,6 +8,7 @@
     "test": "echo \"no test\" && exit 0"
   },
   "dependencies": {
+    "axios": "^1.13.2",
     "bcrypt": "^5.1.1",
     "body-parser": "^1.20.2",
     "ejs": "^3.1.10",

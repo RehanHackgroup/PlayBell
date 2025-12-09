@@ -64,8 +64,8 @@
     "verified": false,
     "emailVerified": true,
     "emailToken": null,
-    "resetToken": null,
-    "resetTokenExpires": null
+    "resetToken": "fa50cbd9-6bb7-4ae8-93d7-ca421a0ae77f",
+    "resetTokenExpires": 1765309364346
   },
   {
     "id": 9,
